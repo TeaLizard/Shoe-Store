@@ -29,7 +29,7 @@ public class Shoe {
     private String sku;
 
     @NotBlank
-    @Column(nullable = false, name = "is-active")
+    @Column(nullable = false, name = "is_active")
     private Boolean isActive;
 
     @NotBlank

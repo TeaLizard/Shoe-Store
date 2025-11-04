@@ -1,34 +1,29 @@
 package com.example.PROG3350_Assignment3_API.model.mapper;
 
+import com.example.PROG3350_Assignment3_API.model.dto.CartDTO;
+import com.example.PROG3350_Assignment3_API.model.entity.Cart;
 import com.example.PROG3350_Assignment3_API.model.entity.Shoe;
 import com.example.PROG3350_Assignment3_API.model.dto.ShoeDTO;
+import com.example.PROG3350_Assignment3_API.repository.ICartRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Mapper {
-    public static class ShoeMapper {
-        public static ShoeDTO toDTO(Shoe shoe) {
-            if(shoe == null) return null;
-            ShoeDTO shoeDTO = new ShoeDTO();
-            shoeDTO.setId(shoe.getId());
-            shoeDTO.setName(shoe.getName());
-            shoeDTO.setPrice(shoe.getPrice());
-            shoeDTO.setDescription(shoe.getDescription());
-            shoeDTO.setSku(shoe.getSku());
-            shoeDTO.setIsActive(shoe.getIsActive());
-            shoeDTO.setImage(shoe.getImage());
-            return shoeDTO;
-        }
+    private CartMapper cartMapper;
+    private ShoeMapper shoeMapper;
 
-        public static Shoe toEntity(ShoeDTO shoeDTO) {
-            if (shoeDTO == null) return null;
-            Shoe shoe = new Shoe();
-            shoe.setId(shoeDTO.getId());
-            shoe.setName(shoeDTO.getName());
-            shoe.setPrice(shoeDTO.getPrice());
-            shoe.setDescription(shoeDTO.getDescription());
-            shoe.setSku(shoeDTO.getSku());
-            shoe.setIsActive(shoeDTO.getIsActive());
-            shoe.setImage(shoeDTO.getImage());
-            return shoe;
-        }
+    @Autowired
+    public Mapper(CartMapper cartMapper, ShoeMapper shoeMapper) {
+        this.cartMapper = cartMapper;
+        this.shoeMapper = shoeMapper;
+    }
+
+    public CartMapper getCartMapper() {
+        return cartMapper;
+    }
+
+    public ShoeMapper getShoeMapper() {
+        return shoeMapper;
     }
 }
