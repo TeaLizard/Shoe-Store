@@ -6,6 +6,7 @@ import com.example.PROG3350_Assignment3_API.model.dto.ShoeDTO;
 public class Mapper {
     public static class ShoeMapper {
         public static ShoeDTO toDTO(Shoe shoe) {
+            if(shoe == null) return null;
             ShoeDTO shoeDTO = new ShoeDTO();
             shoeDTO.setId(shoe.getId());
             shoeDTO.setName(shoe.getName());
@@ -18,6 +19,7 @@ public class Mapper {
         }
 
         public static Shoe toEntity(ShoeDTO shoeDTO) {
+            if (shoeDTO == null) return null;
             Shoe shoe = new Shoe();
             shoe.setId(shoeDTO.getId());
             shoe.setName(shoeDTO.getName());
