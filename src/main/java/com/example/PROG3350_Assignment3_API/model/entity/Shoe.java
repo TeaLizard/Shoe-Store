@@ -1,4 +1,4 @@
-package com.example.PROG3350_Assignment3_API.model;
+package com.example.PROG3350_Assignment3_API.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -73,10 +73,10 @@ public class Shoe {
         this.sku = sku;
     }
 
-    public Boolean getActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
-    public void setActive(Boolean isActive) {
+    public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
 
