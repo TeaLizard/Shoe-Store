@@ -3,6 +3,7 @@ package com.example.PROG3350_Assignment3_API.model.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity(name = "shoes")
 @Table(name = "shoes")
@@ -18,6 +19,7 @@ public class Shoe {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @NotNull
     @DecimalMin("0.0")
     @Column(nullable = false)
     private Double price;
@@ -26,7 +28,7 @@ public class Shoe {
     @Column(nullable = false, unique = true)
     private String sku;
 
-    @NotBlank
+    @NotNull
     @Column(nullable = false, name = "is_active")
     private Boolean isActive;
 
