@@ -11,8 +11,8 @@ import java.util.Optional;
 
 @Service
 public interface ICartService {
-    Optional<Cart> get(Integer id);
-    boolean addToCart(Integer id, Integer itemId);
-    boolean emptyCart(Integer id);
-    boolean removeItem(Integer id, Integer itemId);
+    Cart get(Integer id);
+    void addToCart(Integer id, Integer itemId);
+    void emptyCart(Integer id);
+    void removeItem(Integer id, Integer itemId);
 }

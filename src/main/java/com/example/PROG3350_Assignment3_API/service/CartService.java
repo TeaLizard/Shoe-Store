@@ -22,54 +22,40 @@ public class CartService implements ICartService {
     }
 
     @Override
-    public Optional<Cart> get(Integer id) {
-        return repository.findById(id);
+    public Cart get(Integer id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cart with id " + id + " not found"));
     }
 
     @Override
-    public boolean addToCart(Integer id, Integer itemId) {
+    public void addToCart(Integer id, Integer itemId) {
         var cart = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cart not found"));
         var item = shoeRepository.findById(itemId)
                 .orElseThrow(() -> new RuntimeException("Item not found"));
-        if (cart == null || item == null) {
-            return false;
-        }
 
         getShoes(cart).add(item);
         repository.save(cart);
-
-        return true;
     }
 
     @Override
-    public boolean emptyCart(Integer id) {
+    public void emptyCart(Integer id) {
         var cart = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cart not found"));
-        if (cart == null) {
-            return false;
-        }
 
         getShoes(cart).clear();
         repository.save(cart);
-
-        return true;
     }
 
     @Override
-    public boolean removeItem(Integer id, Integer itemId) {
+    public void removeItem(Integer id, Integer itemId) {
         var cart = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cart not found"));
         var item = shoeRepository.findById(itemId)
                 .orElseThrow(() -> new RuntimeException("Item not found"));
-        if (cart == null || item == null) {
-            return false;
-        }
 
         getShoes(cart).remove(item);
         repository.save(cart);
-
-        return true;
     }
 
     private List<Shoe> getShoes(Cart cart) {
