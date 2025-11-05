@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+
 public interface ICartService {
     Cart get(Integer id);
     void addToCart(Integer id, Integer itemId);

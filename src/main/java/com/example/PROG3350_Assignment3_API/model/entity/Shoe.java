@@ -1,13 +1,11 @@
 package com.example.PROG3350_Assignment3_API.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity(name = "shoes")
+@Table(name = "shoes")
 public class Shoe {
     @Id
     @GeneratedValue
