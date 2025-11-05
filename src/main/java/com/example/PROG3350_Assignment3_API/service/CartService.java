@@ -1,5 +1,6 @@
 package com.example.PROG3350_Assignment3_API.service;
 
+import com.example.PROG3350_Assignment3_API.exeption.NotFoundException;
 import com.example.PROG3350_Assignment3_API.model.entity.Cart;
 import com.example.PROG3350_Assignment3_API.model.entity.Shoe;
 import com.example.PROG3350_Assignment3_API.repository.ICartRepository;
@@ -24,15 +25,15 @@ public class CartService implements ICartService {
     @Override
     public Cart get(Integer id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cart with id " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException("Cart", id));
     }
 
     @Override
     public void addToCart(Integer id, Integer itemId) {
         var cart = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cart not found"));
+                .orElseThrow(() -> new NotFoundException("Cart", id));
         var item = shoeRepository.findById(itemId)
-                .orElseThrow(() -> new RuntimeException("Item not found"));
+                .orElseThrow(() -> new NotFoundException("Item", itemId));
 
         getShoes(cart).add(item);
         repository.save(cart);
@@ -41,7 +42,7 @@ public class CartService implements ICartService {
     @Override
     public void emptyCart(Integer id) {
         var cart = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cart not found"));
+                .orElseThrow(() -> new NotFoundException("Cart", id));
 
         getShoes(cart).clear();
         repository.save(cart);
@@ -50,9 +51,9 @@ public class CartService implements ICartService {
     @Override
     public void removeItem(Integer id, Integer itemId) {
         var cart = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cart not found"));
+                .orElseThrow(() -> new NotFoundException("Cart", id));
         var item = shoeRepository.findById(itemId)
-                .orElseThrow(() -> new RuntimeException("Item not found"));
+                .orElseThrow(() -> new NotFoundException("Item", itemId));
 
         getShoes(cart).remove(item);
         repository.save(cart);

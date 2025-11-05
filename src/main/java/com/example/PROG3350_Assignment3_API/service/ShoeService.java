@@ -1,5 +1,6 @@
 package com.example.PROG3350_Assignment3_API.service;
 
+import com.example.PROG3350_Assignment3_API.exeption.NotFoundException;
 import com.example.PROG3350_Assignment3_API.model.entity.Shoe;
 import com.example.PROG3350_Assignment3_API.repository.IShoeRepository;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class ShoeService implements IShoeService {
     @Override
     public Shoe getById(int id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Shoe with id " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException("Shoe", id));
     }
 
     @Override
@@ -33,7 +34,7 @@ public class ShoeService implements IShoeService {
     @Override
     public void update(Shoe shoe) {
         var old = repository.findById(shoe.getId())
-                .orElseThrow(() -> new RuntimeException("Shoe with id " + shoe.getId() + " not found"));
+                .orElseThrow(() -> new NotFoundException("Shoe", shoe.getId()));
 
         old.setName(shoe.getName());
         old.setDescription(shoe.getDescription());
@@ -47,7 +48,7 @@ public class ShoeService implements IShoeService {
     @Override
     public void delete(int id) {
         var shoe = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Shoe with id " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException("Shoe", id));
 
         repository.delete(shoe);
     }
