@@ -59,6 +59,13 @@ public class CartService implements ICartService {
         repository.save(cart);
     }
 
+    @Override
+    public void destroyCart(Integer id) {
+        var cart = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Cart", id));
+        repository.delete(cart);
+    }
+
     private List<Shoe> getShoes(Cart cart) {
         var shoes = cart.getShoes();
         if (shoes == null) {

@@ -15,4 +15,5 @@ public interface ICartService {
     void addToCart(Integer id, Integer itemId);
     void emptyCart(Integer id);
     void removeItem(Integer id, Integer itemId);
+    void destroyCart(Integer id);
 }
