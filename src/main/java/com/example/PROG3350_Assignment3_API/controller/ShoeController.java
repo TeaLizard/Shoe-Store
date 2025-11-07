@@ -5,6 +5,7 @@ import com.example.PROG3350_Assignment3_API.model.entity.Shoe;
 import com.example.PROG3350_Assignment3_API.model.mapper.ShoeMapper;
 import com.example.PROG3350_Assignment3_API.service.UnitOfWork;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/products")
 public class ShoeController {
     private final UnitOfWork unitOfWork;
+    @Autowired
     public ShoeController(UnitOfWork unitOfWork) {
         this.unitOfWork = unitOfWork;
     }
