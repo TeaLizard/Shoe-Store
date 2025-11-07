@@ -1,5 +1,6 @@
 package com.example.PROG3350_Assignment3_API.service;
 
+import com.example.PROG3350_Assignment3_API.exeption.BadRequestException;
 import com.example.PROG3350_Assignment3_API.exeption.NotFoundException;
 import com.example.PROG3350_Assignment3_API.model.entity.Cart;
 import com.example.PROG3350_Assignment3_API.model.entity.Shoe;
@@ -7,6 +8,7 @@ import com.example.PROG3350_Assignment3_API.repository.ICartRepository;
 import com.example.PROG3350_Assignment3_API.repository.IShoeRepository;
 import org.springframework.stereotype.Service;
 
+import java.io.NotActiveException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +17,6 @@ import java.util.Optional;
 public class CartService implements ICartService {
     private final ICartRepository repository;
     private final IShoeRepository shoeRepository;
-    public static final Integer CART_INTEGER = 1;
     public CartService(ICartRepository repository, IShoeRepository shoeRepository) {
         this.repository = repository;
         this.shoeRepository = shoeRepository;
@@ -34,6 +35,10 @@ public class CartService implements ICartService {
                 .orElseThrow(() -> new NotFoundException("Cart", id));
         var item = shoeRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("Item", itemId));
+
+        if (!item.getIsActive()) {
+            throw new BadRequestException("Shoe with id " + id + " is not active");
+        }
 
         getShoes(cart).add(item);
         repository.save(cart);

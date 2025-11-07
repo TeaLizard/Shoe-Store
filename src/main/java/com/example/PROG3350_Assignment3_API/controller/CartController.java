@@ -25,9 +25,6 @@ public class CartController {
     public ResponseEntity<?> addToCart(@PathVariable("productId") int productId) { // ? for String response on bad request
         var cart = unitOfWork.getCartService().get(ID);
         var shoe = unitOfWork.getShoeService().getById(productId);
-        if (!shoe.getIsActive()) {
-            return ResponseEntity.badRequest().body("Shoe is not active");
-        }
         unitOfWork.getCartService().addToCart(ID, productId);
         return ResponseEntity.ok(unitOfWork.getShoeService().getById(productId));
     }
