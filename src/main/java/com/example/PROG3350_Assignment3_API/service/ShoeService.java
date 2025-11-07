@@ -27,8 +27,9 @@ public class ShoeService implements IShoeService {
     }
 
     @Override
-    public void add(Shoe shoe) {
+    public Shoe add(Shoe shoe) {
         repository.save(shoe);
+        return shoe;
     }
 
     @Override

@@ -1,8 +1,6 @@
 package com.example.PROG3350_Assignment3_API.controller;
 
-import com.example.PROG3350_Assignment3_API.model.dto.ShoeDTO;
 import com.example.PROG3350_Assignment3_API.model.entity.Shoe;
-import com.example.PROG3350_Assignment3_API.model.mapper.ShoeMapper;
 import com.example.PROG3350_Assignment3_API.service.UnitOfWork;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,37 +20,34 @@ public class ShoeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ShoeDTO>> getAllShoes() {
+    public ResponseEntity<List<Shoe>> getAllShoes() {
         var shoes = unitOfWork.getShoeService().getAll();
         if (shoes.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        var mapper = unitOfWork.getMapper().getShoeMapper();
-        var shoeDTOs = shoes.stream().map(mapper::toDTO).collect(Collectors.toList());
-        return ResponseEntity.ok(shoeDTOs);
+        return ResponseEntity.ok(shoes);
     }
 
     @GetMapping("{productId}")
-    public ResponseEntity<ShoeDTO> getShoe(@PathVariable("productId") int productId) {
-        return ResponseEntity.ok(unitOfWork.getMapper().getShoeMapper().toDTO(unitOfWork.getShoeService().getById(productId)));
+    public ResponseEntity<Shoe> getShoe(@PathVariable("productId") int productId) {
+        return ResponseEntity.ok(unitOfWork.getShoeService().getById(productId));
     }
 
     @PostMapping
-    public ResponseEntity<ShoeDTO> createShoe(@RequestBody @Valid Shoe shoe) {
+    public ResponseEntity<Shoe> createShoe(@RequestBody @Valid Shoe shoe) {
         shoe.setId(null);
-        unitOfWork.getShoeService().add(shoe);
-        return ResponseEntity.ok(unitOfWork.getMapper().getShoeMapper().toDTO(unitOfWork.getShoeService().getById(shoe.getId())));
+        return ResponseEntity.ok(unitOfWork.getShoeService().add(shoe));
     }
 
     @PutMapping("{productId}")
-    public ResponseEntity<ShoeDTO> updateShoe(@PathVariable("productId") int productId, @RequestBody @Valid Shoe shoe) {
+    public ResponseEntity<Shoe> updateShoe(@PathVariable("productId") int productId, @RequestBody @Valid Shoe shoe) {
         shoe.setId(productId);
         unitOfWork.getShoeService().update(shoe);
-        return ResponseEntity.ok(unitOfWork.getMapper().getShoeMapper().toDTO(unitOfWork.getShoeService().getById(productId)));
+        return ResponseEntity.ok(unitOfWork.getShoeService().getById(shoe.getId()));
     }
 
     @DeleteMapping("{productId}")
-    public ResponseEntity<Boolean> deleteShoe(@PathVariable("productId") int productId) {
+    public ResponseEntity<?> deleteShoe(@PathVariable("productId") int productId) { // ? for no type needed
         unitOfWork.getShoeService().delete(productId);
         return ResponseEntity.noContent().build();
     }

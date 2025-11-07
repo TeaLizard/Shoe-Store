@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface IShoeService {
     List<Shoe> getAll();
     Shoe getById(int id);
-    void add(Shoe shoe);
+    Shoe add(Shoe shoe);
     void update(Shoe shoe);
     void delete(int id);
 }
